@@ -1,0 +1,15 @@
+# GB Chat engine overlay.
+#
+# start-engine.sh copies this file into the engine home on first start, with __WORKSPACE__
+# replaced by the absolute workspace path. After that, the copy in the engine home is the live
+# config; edit that one (or delete it to re-seed from this template).
+
+terminal:
+  backend: local
+  # The agent works here. Deliverables go to <workspace>/outputs, uploads arrive in
+  # <workspace>/uploads. The GB Chat server serves both folders.
+  cwd: __WORKSPACE__
+
+display:
+  # Stream the agent's short "what I'm doing" notes to the UI.
+  interim_assistant_messages: true

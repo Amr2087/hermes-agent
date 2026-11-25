@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="GB Chat">
+  <rect width="48" height="48" rx="12" fill="#2A51A3"/>
+  <path d="M13 15.5A4.5 4.5 0 0 1 17.5 11h13a4.5 4.5 0 0 1 4.5 4.5v10a4.5 4.5 0 0 1-4.5 4.5H22l-6.2 5.2c-.9.8-2.3.1-2.3-1.1V30h.1A4.5 4.5 0 0 1 13 25.5z" fill="#fff"/>
+  <text x="24" y="24.6" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#2A51A3">GB</text>
+</svg>

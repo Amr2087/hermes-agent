@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2a51a3">
+  <title>GB Chat</title>
+  <link rel="icon" href="/assets/gb-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="sidebar" id="sidebar" aria-label="Chats">
+      <div class="brand">
+        <img class="brand-mark" src="/assets/gb-mark.svg" alt="" width="36" height="36">
+        <div class="brand-text">
+          <span class="brand-name">GB Chat</span>
+          <span class="brand-company">GB Corp</span>
+        </div>
+        <button class="icon-btn only-mobile" id="close-sidebar" type="button" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <button class="new-chat" id="new-chat" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        New chat
+      </button>
+
+      <nav class="nav" aria-label="Sections">
+        <button class="nav-item" type="button" data-view="files">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+          My files
+        </button>
+        <button class="nav-item" type="button" data-view="skills">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>
+          What I can do
+        </button>
+      </nav>
+
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+        <input id="chat-filter" type="search" placeholder="Search chats" aria-label="Search chats">
+      </div>
+
+      <div class="chat-list-label">Recent</div>
+      <ul class="chat-list" id="chat-list" aria-label="Recent chats"></ul>
+
+      <div class="sidebar-foot">
+        <div class="user" id="user-chip">
+          <span class="avatar" id="user-avatar">GB</span>
+          <span class="user-name" id="user-name">GB Corp employee</span>
+        </div>
+        <span class="engine-pill" id="engine-pill" hidden>Demo mode</span>
+      </div>
+    </aside>
+
+    <div class="scrim" id="scrim" hidden></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" id="open-sidebar" type="button" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <h1 class="topbar-title" id="view-title">New chat</h1>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="rename-chat" type="button" aria-label="Rename chat" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>
+          </button>
+          <button class="icon-btn" id="delete-chat" type="button" aria-label="Delete chat" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="view view-chat" id="view-chat">
+        <div class="thread" id="thread" aria-live="polite">
+          <div class="welcome" id="welcome">
+            <img class="welcome-mark" src="/assets/gb-mark.svg" alt="" width="56" height="56">
+            <h2 class="welcome-title" id="greeting">Good day</h2>
+            <p class="welcome-sub">What can I help you make today?</p>
+            <div class="suggestions" id="suggestions">
+              <button class="suggestion" type="button" data-prompt="Draft a two-page Word report summarizing our Q3 sales performance by region, with an executive summary and a table of key figures.">
+                <span class="suggestion-kind kind-word">Word</span>
+                <span class="suggestion-title">Draft a Q3 sales report</span>
+                <span class="suggestion-sub">Executive summary, regional table</span>
+              </button>
+              <button class="suggestion" type="button" data-prompt="Build a 6-slide PowerPoint deck introducing a new employee wellbeing program, in GB Corp style.">
+                <span class="suggestion-kind kind-ppt">PowerPoint</span>
+                <span class="suggestion-title">Build a 6-slide deck</span>
+                <span class="suggestion-sub">New wellbeing program</span>
+              </button>
+              <button class="suggestion" type="button" data-prompt="Create an Excel budget for a marketing campaign: monthly line items, totals with formulas, and a chart.">
+                <span class="suggestion-kind kind-excel">Excel</span>
+                <span class="suggestion-title">Create a campaign budget</span>
+                <span class="suggestion-sub">Monthly items, formulas, chart</span>
+              </button>
+              <button class="suggestion" type="button" data-prompt="Make a one-page HTML announcement for our new office opening, mobile friendly and in GB Corp colors.">
+                <span class="suggestion-kind kind-web">Web page</span>
+                <span class="suggestion-title">Make an announcement page</span>
+                <span class="suggestion-sub">One page, mobile friendly</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <form class="composer" id="composer" autocomplete="off">
+          <div class="attachments" id="attachments" hidden></div>
+          <div class="composer-row">
+            <label class="icon-btn attach" title="Attach files" aria-label="Attach files">
+              <input type="file" id="file-input" multiple hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7.1-7.1l8-8a3.5 3.5 0 0 1 5 5l-8 8a2 2 0 0 1-2.8-2.8l7.4-7.4"/></svg>
+            </label>
+            <textarea id="input" rows="1" placeholder="Ask GB Chat to write, analyze or create a file…" aria-label="Message"></textarea>
+            <button class="send" id="send" type="submit" aria-label="Send">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </button>
+            <button class="stop" id="stop" type="button" aria-label="Stop" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
+            </button>
+          </div>
+          <p class="composer-note">GB Chat can make mistakes. Check important facts and figures before you share them.</p>
+        </form>
+      </section>
+
+      <section class="view view-files" id="view-files" hidden>
+        <div class="panel">
+          <p class="panel-lead">Everything GB Chat has made for you. Files open in a new tab, or download them for Office.</p>
+          <div class="file-grid" id="file-grid"></div>
+        </div>
+      </section>
+
+      <section class="view view-skills" id="view-skills" hidden>
+        <div class="panel">
+          <p class="panel-lead">Skills GB Chat uses to get work done. Just ask in plain words; it picks the right one.</p>
+          <div class="skill-grid" id="skill-grid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drop-overlay" id="drop-overlay" hidden>
+    <div class="drop-card">Drop files to attach them</div>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
