@@ -46,13 +46,18 @@ the experience. Files it makes are placeholders.
    ```bash
    cd gb-chat
    cp engine/env.example .env
-   # set API_SERVER_KEY and GB_CHAT_ENGINE_KEY to the same long random value,
-   # and add the API key for the model provider IT approved
    ```
-3. Pick the model once:
-   ```bash
-   HERMES_HOME=$PWD/.engine-home python -m hermes_cli.main model
-   ```
+   In `.env`, set `API_SERVER_KEY` and `GB_CHAT_ENGINE_KEY` to the same long random value
+   (for example `openssl rand -hex 32`). Then fill in the model section:
+   - `AZURE_FOUNDRY_BASE_URL`: your Foundry endpoint, ending in `/openai/v1`.
+   - `AZURE_FOUNDRY_API_KEY`: the key from the same page.
+   - `AZURE_FOUNDRY_DEPLOYMENT`: the deployment name you gave the model in Foundry. It defaults to `gpt-6-luna`.
+3. Model notes. GB Chat runs on OpenAI GPT through **Microsoft Foundry** (Azure AI Foundry), using the
+   engine's `azure-foundry` provider with the Responses API. For production, switch to keyless sign-in:
+   set `AZURE_FOUNDRY_AUTH_MODE=entra_id`, leave the key empty, and give the server's managed identity
+   the **Azure AI User** role on the Foundry resource. The model settings are copied into
+   `.engine-home/config.yaml` on the first start. After that, edit them there, or delete that file to
+   copy them again from `.env`.
 4. Start both processes (two terminals, or two services):
    ```bash
    ./start-engine.sh     # agent engine, local API on 127.0.0.1:8642

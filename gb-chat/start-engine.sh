@@ -26,7 +26,14 @@ WORKSPACE="$(cd "$WORKSPACE" && pwd)"
 cp "$HERE/engine/SOUL.md" "$ENGINE_HOME/SOUL.md"
 # Config is seeded once, then owned by the engine home (the engine writes to it too).
 if [[ ! -f "$ENGINE_HOME/config.yaml" ]]; then
-  sed "s#__WORKSPACE__#$WORKSPACE#g" "$HERE/engine/config.yaml" > "$ENGINE_HOME/config.yaml"
+  if [[ -z "${AZURE_FOUNDRY_DEPLOYMENT:-}" ]]; then
+    echo "AZURE_FOUNDRY_DEPLOYMENT is not set. Add your Foundry deployment name to gb-chat/.env." >&2
+    exit 1
+  fi
+  sed -e "s#__WORKSPACE__#$WORKSPACE#g" \
+      -e "s#__MODEL_DEPLOYMENT__#$AZURE_FOUNDRY_DEPLOYMENT#g" \
+      -e "s#__AUTH_MODE__#${AZURE_FOUNDRY_AUTH_MODE:-api_key}#g" \
+      "$HERE/engine/config.yaml" > "$ENGINE_HOME/config.yaml"
 fi
 
 export HERMES_HOME="$ENGINE_HOME"

@@ -1,8 +1,19 @@
 # GB Chat engine overlay.
 #
-# start-engine.sh copies this file into the engine home on first start, with __WORKSPACE__
-# replaced by the absolute workspace path. After that, the copy in the engine home is the live
+# start-engine.sh copies this file into the engine home on first start, filling in the
+# __PLACEHOLDERS__ from gb-chat/.env. After that, the copy in the engine home is the live
 # config; edit that one (or delete it to re-seed from this template).
+
+# Model: OpenAI GPT on Microsoft Foundry (Azure AI Foundry).
+# The endpoint URL and key come from gb-chat/.env (AZURE_FOUNDRY_BASE_URL, AZURE_FOUNDRY_API_KEY).
+model:
+  provider: azure-foundry
+  # Your Foundry *deployment* name (set AZURE_FOUNDRY_DEPLOYMENT in .env before first start).
+  default: __MODEL_DEPLOYMENT__
+  # GPT-5 and later models on Foundry use the Responses API.
+  api_mode: codex_responses
+  # api_key, or entra_id for keyless sign-in with a managed identity (recommended in production).
+  auth_mode: __AUTH_MODE__
 
 terminal:
   backend: local
