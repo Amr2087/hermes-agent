@@ -14,6 +14,14 @@ WORKSPACE="${GB_CHAT_WORKSPACE:-$HERE/.workspace}"
 if [[ -f "$HERE/.env" ]]; then
   set -a; source "$HERE/.env"; set +a
 fi
+# The engine appends /responses itself, so the endpoint must stop at /openai/v1. Accept the
+# full URL copied from the Foundry portal by trimming a trailing /responses or slash.
+if [[ -n "${AZURE_FOUNDRY_BASE_URL:-}" ]]; then
+  AZURE_FOUNDRY_BASE_URL="${AZURE_FOUNDRY_BASE_URL%/}"
+  AZURE_FOUNDRY_BASE_URL="${AZURE_FOUNDRY_BASE_URL%/responses}"
+  AZURE_FOUNDRY_BASE_URL="${AZURE_FOUNDRY_BASE_URL%/}"
+  export AZURE_FOUNDRY_BASE_URL
+fi
 if [[ -z "${API_SERVER_KEY:-}" ]]; then
   echo "API_SERVER_KEY is not set. Copy engine/env.example to gb-chat/.env and fill it in." >&2
   exit 1
