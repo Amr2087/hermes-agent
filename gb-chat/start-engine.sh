@@ -44,6 +44,9 @@ if [[ ! -f "$ENGINE_HOME/config.yaml" ]]; then
       "$HERE/engine/config.yaml" > "$ENGINE_HOME/config.yaml"
 fi
 
+# GB Chat's own skills and company tools (gb-chat/mcp): refreshed on every start.
+python "$HERE/engine/connect_gb_services.py" "$ENGINE_HOME"
+
 export HERMES_HOME="$ENGINE_HOME"
 export API_SERVER_ENABLED=true
 cd "$WORKSPACE"

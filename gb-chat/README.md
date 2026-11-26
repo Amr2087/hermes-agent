@@ -36,9 +36,9 @@ the experience. Files it makes are placeholders.
 
 1. Install the engine from the repository root (see the root `README.md`; `./setup-hermes.sh` on
    Linux and macOS). The engine needs Python 3.14 and its `messaging` extra, which carries the web
-   server its API runs on. For a plain source checkout:
+   server its API runs on, and its `mcp` extra for the company tools. For a plain source checkout:
    ```bash
-   uv sync --frozen --python 3.14 --extra messaging
+   uv sync --frozen --python 3.14 --extra messaging --extra mcp
    ```
    The document skills need `python-docx`, `python-pptx` and `openpyxl`. Install them in the engine's
    environment, or turn on the engine's lazy installs (`security.allow_lazy_installs`).
@@ -109,12 +109,24 @@ in `.workspace/uploads`.
 The streamed event types are documented at the top of `server/gbchat/events.py`. Every
 non-GET request must carry the header `X-GB-Chat: 1`, which blocks cross-site request forgery.
 
+## Company tools: knowledge bases and Power BI
+
+Two optional MCP servers in [`mcp/`](mcp/README.md) let the agent search Corp-ChatWithData
+knowledge bases and query its Power BI datasets with DAX, with each employee's grants checked on
+every call. Each server runs on its own (`./start-mcp.sh knowledge`, `./start-mcp.sh powerbi`) and
+keeps the Corp-ChatWithData secrets in its own `.env`. Set their URLs, keys and
+`GB_CHAT_TENANCY_USER_ID` in `gb-chat/.env`; `start-engine.sh` then connects them and installs the
+`powerbi-analyst` and `company-knowledge` skills. Setup and security details are in
+[`mcp/README.md`](mcp/README.md).
+
 ## Tests
 
 ```bash
 cd gb-chat/server
 python3 -m unittest discover -s tests
 ```
+
+The two MCP servers have their own pytest suites; see [`mcp/README.md`](mcp/README.md#tests).
 
 ## Security notes
 
