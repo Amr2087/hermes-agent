@@ -27,6 +27,8 @@ SKILL_TITLES = {
     "document-to-action-items": "Action items from documents",
     "weekly-review-planning": "Weekly planning",
     "grounded-citations": "Research with citations",
+    "powerbi-analyst": "Power BI analysis",
+    "company-knowledge": "Company knowledge",
 }
 
 # Shown on "What I can do" when the engine can't list its skills.
@@ -71,6 +73,18 @@ _TOOL_LABELS = {
     "text_to_speech": "Creating audio",
 }
 
+# GB Chat's own MCP servers (gb-chat/mcp). The engine names their tools mcp__<server>__<tool>.
+_GB_TOOL_LABELS = {
+    "mcp__gb_knowledge__list_knowledge_bases": "Checking your knowledge bases",
+    "mcp__gb_knowledge__search_knowledge": "Searching company knowledge",
+    "mcp__gb_knowledge__list_knowledge_files": "Listing knowledge base documents",
+    "mcp__gb_powerbi__list_datasets": "Checking your Power BI datasets",
+    "mcp__gb_powerbi__describe_dataset": "Reading the dataset's data dictionary",
+    "mcp__gb_powerbi__resolve_entities": "Matching names to the data",
+    "mcp__gb_powerbi__run_dax": "Querying Power BI",
+    "mcp__gb_powerbi__ask_powerbi": "Asking the Power BI assistant",
+}
+
 _ENGINE_NAMES = re.compile(r"\b(?:Hermes(?:[ -]Agent)?|Nous Research)\b")
 
 
@@ -102,6 +116,8 @@ def tool_label(tool: str | None, args: Any = None) -> str:
         return _file_label("Editing", args.get("path") or args.get("file_path"))
     if tool.startswith("browser_"):
         return "Using the browser"
+    if tool in _GB_TOOL_LABELS:
+        return _GB_TOOL_LABELS[tool]
     if tool.startswith("mcp_") or tool in {"tool_call", "tool_search", "tool_describe"}:
         return "Using a connected app"
     if tool in _TOOL_LABELS:

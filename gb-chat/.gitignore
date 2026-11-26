@@ -3,3 +3,6 @@
 .workspace/
 __pycache__/
 *.pyc
+.venv/
+build/
+*.egg-info/

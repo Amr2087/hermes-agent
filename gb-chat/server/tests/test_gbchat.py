@@ -27,6 +27,9 @@ class LabelTests(unittest.TestCase):
         self.assertEqual(tool_label("terminal", {"command": "ls"}), "Running a command")
         self.assertEqual(tool_label("browser_click"), "Using the browser")
         self.assertEqual(tool_label("some_new_tool"), "Some new tool")
+        self.assertEqual(tool_label("mcp__gb_powerbi__run_dax", {"dax": "EVALUATE x"}), "Querying Power BI")
+        self.assertEqual(tool_label("mcp__gb_knowledge__search_knowledge"), "Searching company knowledge")
+        self.assertEqual(tool_label("mcp__other__thing"), "Using a connected app")
 
     def test_scrub_removes_engine_names(self):
         self.assertEqual(scrub("Hermes Agent failed: Nous Research key missing"), "GB Chat failed: GB Chat key missing")
